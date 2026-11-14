@@ -64,11 +64,7 @@ class _IngresoCorreoState extends ConsumerState<IngresoCorreo> {
   @override
   Widget build(BuildContext context) {
     final listo = _valor.isNotEmpty && _acepta;
-    const enlace = TextStyle(
-      color: Tinta.azul,
-      decoration: TextDecoration.underline,
-      decorationColor: Tinta.azulLinea,
-    );
+    const enlace = TextStyle(color: Tinta.azul);
 
     return Pantalla(
       hijos: [

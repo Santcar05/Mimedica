@@ -201,11 +201,6 @@ class BotonTexto extends StatelessWidget {
                   style: Letra.cuerpoFuerte.copyWith(
                     color: tinta,
                     fontWeight: FontWeight.w600,
-                    decoration: alPulsar == null
-                        ? TextDecoration.none
-                        : TextDecoration.underline,
-                    decorationColor: Tinta.azulLinea,
-                    decorationThickness: 1.5,
                   ),
                 ),
               ),
