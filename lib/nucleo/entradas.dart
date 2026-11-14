@@ -45,3 +45,9 @@ double? leerCantidad(String texto) {
 }
 
 final soloCantidad = FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'));
+
+/// Solo números y a lo sumo seis caracteres: «999,5» cabe, un cero de más no.
+final formatoCantidad = <TextInputFormatter>[
+  soloCantidad,
+  LengthLimitingTextInputFormatter(6),
+];
