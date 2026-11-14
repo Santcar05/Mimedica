@@ -23,9 +23,9 @@ class Bienvenida extends ConsumerWidget {
       hijos: [
         const Row(
           children: [
-            Logo(),
-            SizedBox(width: 10),
-            Text('Mimedica', style: Letra.seccion),
+            Logo(tam: 72),
+            SizedBox(width: 12),
+            Text('Mimedica', style: Letra.titulo),
           ],
         ),
         const SizedBox(height: 40),

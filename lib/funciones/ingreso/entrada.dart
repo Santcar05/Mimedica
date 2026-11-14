@@ -17,25 +17,31 @@ class Entrada extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final hogar = ref.watch(hogarProvider);
-    final error = hogar.hasError && !hogar.hasValue ? hogar.error : null;
+    final error = hogar.hasError ? hogar.error : null;
 
     if (error == null) {
-      return const Scaffold(
+      return Scaffold(
         body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Logo(tam: 56),
-              SizedBox(height: 24),
-              SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(
-                  strokeWidth: 1.5,
-                  color: Tinta.apagada,
+          child: Semantics(
+            label: 'Cargando Mimedica',
+            liveRegion: true,
+            child: const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Logo(tam: 176),
+                SizedBox(height: 40),
+                SizedBox(
+                  width: 56,
+                  height: 56,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 4,
+                    strokeCap: StrokeCap.round,
+                    color: Tinta.azul,
+                    backgroundColor: Tinta.azulSuave,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );
