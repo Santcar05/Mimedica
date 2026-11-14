@@ -8,6 +8,7 @@ import '../../datos/calculo_agotamiento.dart';
 import '../../datos/formato.dart';
 import '../../datos/hogar.dart';
 import '../../datos/identificador.dart';
+import '../../datos/limites.dart';
 import '../../datos/modelos.dart';
 import '../../datos/repositorio.dart';
 import '../../nucleo/entradas.dart';
@@ -98,6 +99,7 @@ class _FormularioState extends ConsumerState<FormularioTratamiento> {
     final porToma = leerCantidad(_porToma.text);
     final enCasa = leerCantidad(_enCasa.text);
     if (porToma == null || porToma <= 0 || enCasa == null) return null;
+    if (porToma > Limites.porToma || enCasa > Limites.cantidad) return null;
     final base = widget.existente;
     return Tratamiento(
       id: _id,
@@ -126,10 +128,19 @@ class _FormularioState extends ConsumerState<FormularioTratamiento> {
     if (porToma == null || porToma <= 0) {
       _errores['porToma'] =
           'Escribe cuánto toma cada vez, por ejemplo 1 o 0,5.';
+    } else if (porToma > Limites.porToma) {
+      _errores['porToma'] =
+          'Ese número es muy alto para una toma. Revisa la fórmula: el máximo '
+          'es ${cantidad(Limites.porToma)}.';
     }
-    if (leerCantidad(_enCasa.text) == null) {
+    final enCasa = leerCantidad(_enCasa.text);
+    if (enCasa == null) {
       _errores['enCasa'] =
           'Cuenta lo que hay en casa hoy. Si no queda nada, escribe 0.';
+    } else if (enCasa > Limites.cantidad) {
+      _errores['enCasa'] =
+          'Ese número es muy alto. Cuenta las que hay en casa hoy: el máximo '
+          'es ${cantidad(Limites.cantidad)}.';
     }
     if (_vigencia.text.isNotEmpty && leerFecha(_vigencia.text) == null) {
       _errores['vigencia'] =
@@ -257,7 +268,7 @@ class _FormularioState extends ConsumerState<FormularioTratamiento> {
           rotulo: '${mayusculaInicial(unidades)} por toma',
           controlador: _porToma,
           teclado: const TextInputType.numberWithOptions(decimal: true),
-          formato: [soloCantidad],
+          formato: formatoCantidad,
           sufijo: leerCantidad(_porToma.text) == 1
               ? _presentacion.singular
               : unidades,
@@ -274,7 +285,7 @@ class _FormularioState extends ConsumerState<FormularioTratamiento> {
           rotulo: '${mayusculaInicial(unidades)} en casa hoy',
           controlador: _enCasa,
           teclado: const TextInputType.numberWithOptions(decimal: true),
-          formato: [soloCantidad],
+          formato: formatoCantidad,
           sufijo: unidades,
           ayuda: 'Cuéntalas si puedes. Es lo que más afina la fecha.',
           error: _errores['enCasa'],

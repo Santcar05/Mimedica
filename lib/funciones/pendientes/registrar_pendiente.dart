@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../datos/formato.dart';
 import '../../datos/hogar.dart';
 import '../../datos/identificador.dart';
+import '../../datos/limites.dart';
 import '../../datos/modelos.dart';
 import '../../datos/repositorio.dart';
 import '../../nucleo/entradas.dart';
@@ -85,6 +86,9 @@ class _RegistrarPendienteState extends ConsumerState<RegistrarPendiente> {
     final faltante = leerCantidad(_faltante.text);
     if (_faltante.text.isNotEmpty && faltante == null) {
       _errores['faltante'] = 'Escribe solo el número, por ejemplo 30.';
+    } else if (faltante != null && faltante > Limites.cantidad) {
+      _errores['faltante'] =
+          'Ese número es muy alto: el máximo es ${cantidad(Limites.cantidad)}.';
     }
     setState(() {});
     if (_errores.isNotEmpty) return;
@@ -157,7 +161,7 @@ class _RegistrarPendienteState extends ConsumerState<RegistrarPendiente> {
           rotulo: 'Cuántas faltaron (opcional)',
           controlador: _faltante,
           teclado: const TextInputType.numberWithOptions(decimal: true),
-          formato: [soloCantidad],
+          formato: formatoCantidad,
           sufijo: t?.presentacion.plural,
           error: _errores['faltante'],
         ),
