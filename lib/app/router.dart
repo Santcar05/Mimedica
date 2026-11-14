@@ -16,6 +16,8 @@ import '../funciones/entrega/entrega.dart';
 import '../funciones/ingreso/bienvenida.dart';
 import '../funciones/inicio/cascaron.dart';
 import '../funciones/inicio/inicio.dart';
+import '../funciones/pendientes/pendientes.dart';
+import '../funciones/pendientes/registrar_pendiente.dart';
 import '../funciones/tratamiento/agregar.dart';
 import '../funciones/tratamiento/detalle.dart';
 import '../funciones/tratamiento/editar.dart';
@@ -123,7 +125,10 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           StatefulShellBranch(
             routes: [
-              GoRoute(path: '/pendientes', builder: (_, _) => const Scaffold()),
+              GoRoute(
+                path: '/pendientes',
+                builder: (_, _) => const Pendientes(),
+              ),
             ],
           ),
           StatefulShellBranch(
@@ -136,6 +141,11 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/ciclo/:id',
         builder: (_, estado) => CicloVista(id: estado.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: '/pendientes/nuevo',
+        builder: (_, estado) =>
+            RegistrarPendiente(tratamientoId: estado.extra as String?),
       ),
       GoRoute(
         path: '/entrega/:id',

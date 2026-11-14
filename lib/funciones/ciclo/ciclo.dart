@@ -176,11 +176,7 @@ class _Seguimiento extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pasos = <(String, String, bool)>[
-      (
-        'Abrimos el ciclo',
-        'El ${fechaCorta(ciclo.abiertoEl)}.',
-        true,
-      ),
+      ('Abrimos el ciclo', 'El ${fechaCorta(ciclo.abiertoEl)}.', true),
       (
         'Consulta a $eps',
         ciclo.nota ?? 'En curso. Todavía no tenemos respuesta.',
