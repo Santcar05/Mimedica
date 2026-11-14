@@ -34,29 +34,41 @@ class _BotonState extends State<Boton> {
 
   bool get _activo => widget.alPulsar != null && !widget.ocupado;
 
+  /// Un botón se reconoce de lejos: el principal es azul macizo con un borde
+  /// inferior que lo hace parecer pulsable; el secundario, azul claro con
+  /// contorno azul. El deshabilitado se ve apagado, no desaparece.
   (Color fondo, Color texto, Color borde) get _colores {
     if (widget.alPulsar == null) {
-      return (Colors.transparent, Tinta.apagada, Tinta.lineaFuerte);
+      return (Tinta.superficie, Tinta.apagada, Tinta.linea);
     }
     return switch (widget.estilo) {
       EstiloBoton.primario => (
-        _hundido ? Tinta.azulHondo : Tinta.tinta,
-        Tinta.papel,
-        _hundido ? Tinta.azulHondo : Tinta.tinta,
+        _hundido ? Tinta.azulHondo : Tinta.azul,
+        Colors.white,
+        _hundido ? Tinta.azulHondo : Tinta.azul,
       ),
       EstiloBoton.secundario => (
-        _hundido ? Tinta.azulSuave : Colors.transparent,
-        Tinta.tinta,
-        _hundido ? Tinta.azul : Tinta.lineaFuerte,
+        _hundido ? Tinta.azulLinea : Tinta.azulSuave,
+        Tinta.azulHondo,
+        Tinta.azul,
       ),
-      EstiloBoton.peligro => (Tinta.riesgo, Tinta.papel, Tinta.riesgo),
+      EstiloBoton.peligro => (
+        _hundido ? const Color(0xFF8E2A24) : Tinta.riesgo,
+        Colors.white,
+        _hundido ? const Color(0xFF8E2A24) : Tinta.riesgo,
+      ),
       EstiloBoton.peligroSuave => (
-        _hundido ? Tinta.riesgoSuave : Colors.transparent,
+        _hundido ? const Color(0xFFF1CFCB) : Tinta.riesgoSuave,
         Tinta.riesgo,
-        Tinta.lineaFuerte,
+        Tinta.riesgo,
       ),
     };
   }
+
+  bool get _conRelieve =>
+      widget.alPulsar != null &&
+      (widget.estilo == EstiloBoton.primario ||
+          widget.estilo == EstiloBoton.peligro);
 
   void _hundir(bool valor) {
     if (_activo && _hundido != valor) setState(() => _hundido = valor);
@@ -72,9 +84,9 @@ class _BotonState extends State<Boton> {
       children: [
         if (widget.ocupado)
           SizedBox(
-            width: 16,
-            height: 16,
-            child: CircularProgressIndicator(strokeWidth: 1.5, color: texto),
+            width: 20,
+            height: 20,
+            child: CircularProgressIndicator(strokeWidth: 2.5, color: texto),
           )
         else if (widget.icono != null)
           Trazo(widget.icono!, tam: 20, color: texto),
@@ -86,8 +98,10 @@ class _BotonState extends State<Boton> {
             overflow: TextOverflow.ellipsis,
             style: Letra.cuerpoFuerte.copyWith(
               color: texto,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
               height: 1,
-              letterSpacing: 0.08,
+              letterSpacing: 0.1,
             ),
           ),
         ),
@@ -115,12 +129,29 @@ class _BotonState extends State<Boton> {
           child: AnimatedContainer(
             duration: Ritmo.micro,
             curve: Ritmo.salida,
-            constraints: const BoxConstraints(minHeight: 48),
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            constraints: const BoxConstraints(minHeight: 54),
+            padding: const EdgeInsets.symmetric(horizontal: 22),
             decoration: BoxDecoration(
               color: fondo,
-              borderRadius: radio,
-              border: Border.all(color: borde),
+              borderRadius: radioBoton,
+              border: Border.all(
+                color: borde,
+                width:
+                    widget.estilo == EstiloBoton.secundario ||
+                        widget.estilo == EstiloBoton.peligroSuave
+                    ? 1.5
+                    : 1,
+              ),
+              boxShadow: _conRelieve
+                  ? [
+                      BoxShadow(
+                        color: widget.estilo == EstiloBoton.peligro
+                            ? const Color(0xFF8E2A24)
+                            : Tinta.azulHondo,
+                        offset: Offset(0, _hundido ? 0 : 3),
+                      ),
+                    ]
+                  : null,
             ),
             alignment: widget.ancho ? Alignment.center : null,
             child: contenido,
@@ -167,7 +198,15 @@ class BotonTexto extends StatelessWidget {
               Flexible(
                 child: Text(
                   texto,
-                  style: Letra.cuerpoFuerte.copyWith(color: tinta),
+                  style: Letra.cuerpoFuerte.copyWith(
+                    color: tinta,
+                    fontWeight: FontWeight.w600,
+                    decoration: alPulsar == null
+                        ? TextDecoration.none
+                        : TextDecoration.underline,
+                    decorationColor: Tinta.azulLinea,
+                    decorationThickness: 1.5,
+                  ),
                 ),
               ),
             ],

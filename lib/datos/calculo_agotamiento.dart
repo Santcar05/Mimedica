@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'limites.dart';
 import 'modelos.dart';
 
 /// Días antes del agotamiento en que empieza la gestión.
@@ -59,7 +60,10 @@ Proyeccion proyectar(Tratamiento t, DateTime hoy) {
     );
   }
 
-  final diasCubiertos = (t.enCasa / consumo + 1e-9).floor();
+  final dias = t.enCasa / consumo + 1e-9;
+  final diasCubiertos = dias.isFinite
+      ? min(dias, Limites.diasProyectados.toDouble()).floor()
+      : 0;
   final conteo = soloDia(t.contadoEl);
   final agotamiento = DateTime(
     conteo.year,

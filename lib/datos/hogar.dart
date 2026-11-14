@@ -40,7 +40,12 @@ class Hogar {
     this.ciclos = const [],
     this.opciones = const [],
     this.pendientes = const [],
+    this.cargado = true,
   });
+
+  /// Falso solo en el estado que existe mientras no hay sesión: no son datos
+  /// de verdad, y nadie debe decidir a qué pantalla ir a partir de ellos.
+  final bool cargado;
 
   final Perfil? perfil;
   final List<Persona> personas;
@@ -96,7 +101,7 @@ class HogarNotifier extends AsyncNotifier<Hogar> {
 
   @override
   Future<Hogar> build() async {
-    if (!ref.watch(sesionProvider)) return const Hogar();
+    if (!ref.watch(sesionProvider)) return const Hogar(cargado: false);
     final repo = ref.watch(repositorioProvider);
 
     final perfil = await repo.perfil();
