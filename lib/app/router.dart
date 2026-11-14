@@ -11,6 +11,7 @@ import '../funciones/activacion/quien_usa.dart';
 import '../funciones/formula/captura.dart';
 import '../funciones/formula/plan_nuevo.dart';
 import '../funciones/formula/previsualizacion.dart';
+import '../funciones/ciclo/ciclo.dart';
 import '../funciones/entrega/entrega.dart';
 import '../funciones/ingreso/bienvenida.dart';
 import '../funciones/inicio/cascaron.dart';
@@ -131,6 +132,10 @@ final routerProvider = Provider<GoRouter>((ref) {
             ],
           ),
         ],
+      ),
+      GoRoute(
+        path: '/ciclo/:id',
+        builder: (_, estado) => CicloVista(id: estado.pathParameters['id']!),
       ),
       GoRoute(
         path: '/entrega/:id',

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/tema.dart';
+import '../../datos/avisos.dart';
 import '../../datos/calculo_agotamiento.dart';
 import '../../datos/formato.dart';
 import '../../datos/hogar.dart';
@@ -14,12 +15,25 @@ import 'borrador.dart';
 
 /// A-11: cierra la activación y dice qué pasa ahora y cuándo se vuelve a saber
 /// de Mimedica.
-class PlanActivo extends ConsumerWidget {
+class PlanActivo extends ConsumerStatefulWidget {
   const PlanActivo({super.key, required this.tratamientoId});
   final String tratamientoId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PlanActivo> createState() => _PlanActivoState();
+}
+
+class _PlanActivoState extends ConsumerState<PlanActivo> {
+  @override
+  void initState() {
+    super.initState();
+    // Ya entendió para qué: es el momento de pedir permiso para avisar.
+    Avisos.instancia.pedirPermiso();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final tratamientoId = widget.tratamientoId;
     final hogar = ref.watch(hogarProvider).value;
     final t = hogar?.tratamiento(tratamientoId);
     final persona = t == null ? null : hogar!.persona(t.personaId);

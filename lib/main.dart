@@ -8,6 +8,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'app/entorno.dart';
 import 'app/router.dart';
 import 'app/tema.dart';
+import 'datos/avisos.dart';
 import 'datos/hogar.dart';
 import 'datos/repositorio.dart';
 import 'datos/repositorio_local.dart';
@@ -17,6 +18,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('es');
   await initializeDateFormatting('es_CO');
+  await Avisos.instancia.iniciar();
 
   final Repositorio repositorio;
   final Acceso acceso;
@@ -49,6 +51,15 @@ class Mimedica extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(routerProvider);
+    Avisos.instancia.alTocar = router.go;
+    ref.listen(hogarProvider, (_, estado) {
+      final hogar = estado.value;
+      if (hogar != null) {
+        Avisos.instancia.sincronizar(hogar, ref.read(hoyProvider));
+      }
+    });
+
     return MaterialApp.router(
       title: 'Mimedica',
       debugShowCheckedModeBanner: false,
@@ -56,7 +67,7 @@ class Mimedica extends ConsumerWidget {
       locale: const Locale('es', 'CO'),
       supportedLocales: const [Locale('es', 'CO'), Locale('es')],
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
-      routerConfig: ref.watch(routerProvider),
+      routerConfig: router,
     );
   }
 }
