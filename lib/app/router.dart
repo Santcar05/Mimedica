@@ -11,6 +11,11 @@ import '../funciones/formula/captura.dart';
 import '../funciones/formula/plan_nuevo.dart';
 import '../funciones/formula/previsualizacion.dart';
 import '../funciones/ingreso/bienvenida.dart';
+import '../funciones/inicio/cascaron.dart';
+import '../funciones/inicio/inicio.dart';
+import '../funciones/tratamiento/agregar.dart';
+import '../funciones/tratamiento/detalle.dart';
+import '../funciones/tratamiento/editar.dart';
 import '../funciones/ingreso/entrada.dart';
 import '../funciones/ingreso/ingreso_codigo.dart';
 import '../funciones/ingreso/ingreso_correo.dart';
@@ -105,9 +110,41 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const Previsualizacion(),
       ),
       GoRoute(path: '/formula/plan', builder: (_, _) => const PlanNuevo()),
+      StatefulShellRoute.indexedStack(
+        builder: (_, _, pestanas) => Cascaron(pestanas: pestanas),
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(path: '/inicio', builder: (_, _) => const Inicio()),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(path: '/pendientes', builder: (_, _) => const Scaffold()),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(path: '/cuenta', builder: (_, _) => const Scaffold()),
+            ],
+          ),
+        ],
+      ),
       GoRoute(
-        path: '/inicio',
-        builder: (_, _) => const Scaffold(body: Center(child: Text('Inicio'))),
+        path: '/tratamiento/nuevo',
+        builder: (_, _) => const AgregarTratamiento(),
+      ),
+      GoRoute(
+        path: '/tratamiento/:id',
+        builder: (_, estado) =>
+            DetalleTratamiento(id: estado.pathParameters['id']!),
+        routes: [
+          GoRoute(
+            path: 'editar',
+            builder: (_, estado) =>
+                EditarTratamiento(id: estado.pathParameters['id']!),
+          ),
+        ],
       ),
     ],
   );
