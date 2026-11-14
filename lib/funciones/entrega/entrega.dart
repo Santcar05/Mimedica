@@ -6,6 +6,7 @@ import '../../app/tema.dart';
 import '../../datos/calculo_agotamiento.dart';
 import '../../datos/formato.dart';
 import '../../datos/hogar.dart';
+import '../../datos/limites.dart';
 import '../../datos/modelos.dart';
 import '../../datos/repositorio.dart';
 import '../../nucleo/entradas.dart';
@@ -55,6 +56,10 @@ class _EntregaState extends ConsumerState<Entrega> {
     final n = leerCantidad(_cantidad.text);
     if (n == null || n <= 0) {
       _errores['cantidad'] = 'Escribe cuántas llegaron, por ejemplo 60.';
+    } else if (n > Limites.cantidad) {
+      _errores['cantidad'] =
+          'Ese número es muy alto. Revisa la entrega: el máximo es '
+          '${cantidad(Limites.cantidad)}.';
     }
     final f = leerFecha(_fecha.text);
     if (f == null) {
@@ -129,7 +134,7 @@ class _EntregaState extends ConsumerState<Entrega> {
           rotulo: 'Cantidad',
           controlador: _cantidad,
           teclado: const TextInputType.numberWithOptions(decimal: true),
-          formato: [soloCantidad],
+          formato: formatoCantidad,
           sufijo: t.presentacion.plural,
           error: _errores['cantidad'],
           autofoco: true,
