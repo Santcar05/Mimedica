@@ -59,7 +59,6 @@ class _CapturaFormulaState extends ConsumerState<CapturaFormula> {
         ref.watch(hogarProvider).value?.personas.lastOrNull?.primerNombre;
 
     return Pantalla(
-      conVolver: false,
       contexto: nombre == null ? null : 'Fórmula de $nombre',
       hijos: [
         const Cabecera(
