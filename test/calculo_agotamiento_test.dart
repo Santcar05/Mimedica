@@ -58,6 +58,20 @@ void main() {
       expect(p.enCasaHoy, 0);
     });
 
+    test('una cantidad absurda no rompe la fecha: se limita a diez años', () {
+      final p = proyectar(_losartan(enCasa: 1e30), DateTime(2026, 9, 3));
+      expect(p.diasRestantes, 3650);
+      expect(p.agotamiento.year, lessThan(2040));
+    });
+
+    test('un consumo nulo no produce fechas infinitas', () {
+      final p = proyectar(
+        _losartan(enCasa: 60, porToma: 0),
+        DateTime(2026, 9, 3),
+      );
+      expect(p.diasRestantes, 0);
+    });
+
     test('la hora del día no mueve la fecha', () {
       final manana = proyectar(_losartan(), DateTime(2026, 10, 1, 0, 5));
       final noche = proyectar(_losartan(), DateTime(2026, 10, 1, 23, 55));
@@ -66,7 +80,11 @@ void main() {
   });
 
   group('estadoDe', () {
-    EstadoTratamiento estado(DateTime hoy, {Ciclo? ciclo, bool pausado = false}) {
+    EstadoTratamiento estado(
+      DateTime hoy, {
+      Ciclo? ciclo,
+      bool pausado = false,
+    }) {
       final t = _losartan(pausado: pausado);
       return estadoDe(t, proyectar(t, hoy), ciclo: ciclo);
     }
