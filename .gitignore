@@ -49,5 +49,4 @@ env.json
 
 # Herramientas locales
 .playwright-cli/
-.claude/
 *.apk
