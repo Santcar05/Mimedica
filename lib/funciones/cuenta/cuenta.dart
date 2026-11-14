@@ -17,7 +17,7 @@ import '../../nucleo/widgets/pantalla.dart';
 import '../estados/estados.dart';
 import '../ingreso/documento_legal.dart';
 
-const _version = '0.1.0';
+const _version = '0.1.1';
 
 /// G-01 a G-06 reunidos: perfil, privacidad, avisos, ayuda y salida.
 class Cuenta extends ConsumerWidget {
