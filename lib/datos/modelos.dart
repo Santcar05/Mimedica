@@ -68,6 +68,14 @@ class Perfil {
   bool get autorizo => autorizoServicioEl != null;
   String get primerNombre => nombre.trim().split(RegExp(r'\s+')).first;
 
+  String get iniciales => nombre
+      .trim()
+      .split(RegExp(r'\s+'))
+      .take(2)
+      .map((p) => p.isEmpty ? '' : p[0])
+      .join()
+      .toUpperCase();
+
   Perfil con({
     DateTime? autorizoServicioEl,
     bool? autorizaEstadistica,
