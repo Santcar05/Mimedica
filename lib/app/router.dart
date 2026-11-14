@@ -12,6 +12,7 @@ import '../funciones/formula/captura.dart';
 import '../funciones/formula/plan_nuevo.dart';
 import '../funciones/formula/previsualizacion.dart';
 import '../funciones/ciclo/ciclo.dart';
+import '../funciones/cuenta/cuenta.dart';
 import '../funciones/entrega/entrega.dart';
 import '../funciones/ingreso/bienvenida.dart';
 import '../funciones/inicio/cascaron.dart';
@@ -133,7 +134,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           StatefulShellBranch(
             routes: [
-              GoRoute(path: '/cuenta', builder: (_, _) => const Scaffold()),
+              GoRoute(path: '/cuenta', builder: (_, _) => const Cuenta()),
             ],
           ),
         ],
