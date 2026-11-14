@@ -26,7 +26,7 @@ Future<void> main() async {
   final Acceso acceso;
   if (Entorno.conServidor) {
     await Supabase.initialize(
-      url: Entorno.supabaseUrl,
+      url: Entorno.urlServidor,
       publishableKey: Entorno.supabaseAnonKey,
     );
     repositorio = RepositorioSupabase(Supabase.instance.client);
