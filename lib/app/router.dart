@@ -64,7 +64,12 @@ final routerProvider = Provider<GoRouter>((ref) {
       }
 
       final hogar = ref.read(hogarProvider);
-      if (!hogar.hasValue) return ruta == '/entrada' ? null : '/entrada';
+      // Mientras se cargan los datos del hogar no se sabe en qué paso va la
+      // persona: se queda en la pantalla de carga en vez de mostrar una
+      // pantalla de activación que después desaparece.
+      if (hogar.isLoading || hogar.hasError || !hogar.hasValue) {
+        return ruta == '/entrada' ? null : '/entrada';
+      }
 
       final pendiente = _pasoPendiente(hogar.requireValue);
       if (pendiente != null) {
