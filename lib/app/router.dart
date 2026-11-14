@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -49,8 +51,13 @@ String? _pasoPendiente(Hogar hogar) {
 
 final routerProvider = Provider<GoRouter>((ref) {
   final cambios = ValueNotifier<int>(0);
-  ref.listen(sesionProvider, (_, _) => cambios.value++);
-  ref.listen(hogarProvider, (_, _) => cambios.value++);
+  // El aviso se difiere: el hogar puede cambiar mientras una pantalla se
+  // construye, y el router no puede reconstruirse en ese momento.
+  void avisar() => scheduleMicrotask(() {
+    if (ref.mounted) cambios.value++;
+  });
+  ref.listen(sesionProvider, (_, _) => avisar());
+  ref.listen(hogarProvider, (_, _) => avisar());
   ref.onDispose(cambios.dispose);
 
   return GoRouter(
@@ -67,7 +74,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       // Mientras se cargan los datos del hogar no se sabe en qué paso va la
       // persona: se queda en la pantalla de carga en vez de mostrar una
       // pantalla de activación que después desaparece.
-      if (hogar.isLoading || hogar.hasError || !hogar.hasValue) {
+      if (hogar.isLoading ||
+          hogar.hasError ||
+          !hogar.hasValue ||
+          !hogar.requireValue.cargado) {
         return ruta == '/entrada' ? null : '/entrada';
       }
 
