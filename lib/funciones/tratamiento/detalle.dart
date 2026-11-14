@@ -126,7 +126,19 @@ class DetalleTratamiento extends ConsumerWidget {
           const Separador(),
         ],
         Dato('En casa hoy', _unidades(t, p.enCasaHoy)),
-        if (v.ciclo != null && v.ciclo!.enCurso) ...[
+        if (v.formulaVencida) ...[
+          const SizedBox(height: 20),
+          Nota(
+            tono: TonoNota.aviso,
+            titulo: '${t.nombre} necesita una fórmula nueva',
+            texto: v.contexto,
+            accion: BotonTexto(
+              'Subir la fórmula nueva',
+              icono: Icono.camara,
+              alPulsar: () => context.push('/tratamiento/nuevo'),
+            ),
+          ),
+        ] else if (v.ciclo != null && v.ciclo!.enCurso) ...[
           const SizedBox(height: 20),
           Nota(
             titulo: 'Ciclo de ${mes(v.ciclo!.abiertoEl)} en gestión',
