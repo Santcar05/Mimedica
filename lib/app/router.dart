@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../datos/hogar.dart';
+import '../datos/modelos.dart';
 import '../funciones/activacion/consentimiento.dart';
 import '../funciones/activacion/datos_basicos.dart';
 import '../funciones/activacion/plan_activo.dart';
@@ -10,6 +11,7 @@ import '../funciones/activacion/quien_usa.dart';
 import '../funciones/formula/captura.dart';
 import '../funciones/formula/plan_nuevo.dart';
 import '../funciones/formula/previsualizacion.dart';
+import '../funciones/entrega/entrega.dart';
 import '../funciones/ingreso/bienvenida.dart';
 import '../funciones/inicio/cascaron.dart';
 import '../funciones/inicio/inicio.dart';
@@ -127,6 +129,20 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(path: '/cuenta', builder: (_, _) => const Scaffold()),
             ],
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/entrega/:id',
+        builder: (_, estado) => Entrega(
+          tratamientoId: estado.pathParameters['id']!,
+          origen: estado.extra as OrigenEntrega?,
+        ),
+        routes: [
+          GoRoute(
+            path: 'listo',
+            builder: (_, estado) =>
+                EntregaGuardada(tratamientoId: estado.pathParameters['id']!),
           ),
         ],
       ),
