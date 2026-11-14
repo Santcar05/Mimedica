@@ -48,3 +48,18 @@ String correoVelado(String correo) {
 
 String mayusculaInicial(String s) =>
     s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
+
+/// «9:40 a. m.»
+String horaCorta(DateTime d) => DateFormat.jm(_es).format(d);
+
+/// «hoy, 9:40 a. m.» o «3 oct, 9:40 a. m.»
+String cuando(DateTime d, DateTime hoy) {
+  final mismoDia =
+      d.year == hoy.year && d.month == hoy.month && d.day == hoy.day;
+  return '${mismoDia ? 'hoy' : fechaMinima(d)}, ${horaCorta(d)}';
+}
+
+/// «1,2 km», «350 m»
+String distancia(double km) => km < 1
+    ? '${(km * 1000).round()} m'
+    : '${km.toStringAsFixed(1).replaceAll('.', ',')} km';
