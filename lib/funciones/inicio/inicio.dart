@@ -22,6 +22,7 @@ class VistaTratamiento {
     this.proyeccion,
     this.ciclo,
     this.opciones,
+    this.hoy,
   ) : estado = estadoDe(t, proyeccion, ciclo: ciclo);
 
   final Tratamiento t;
@@ -29,7 +30,12 @@ class VistaTratamiento {
   final Proyeccion proyeccion;
   final Ciclo? ciclo;
   final List<Opcion> opciones;
+  final DateTime hoy;
   final EstadoTratamiento estado;
+
+  /// H-08: la fórmula ya no está vigente y no se puede seguir gestionando.
+  bool get formulaVencida =>
+      t.vigenciaHasta != null && t.vigenciaHasta!.isBefore(hoy);
 
   bool get porDecidir =>
       !t.pausado &&
@@ -45,6 +51,10 @@ class VistaTratamiento {
   String get contexto {
     final eps = persona?.eps ?? 'la EPS';
     if (t.pausado) return 'En pausa: no te avisaremos de este medicamento.';
+    if (formulaVencida) {
+      return 'La fórmula venció el ${fechaCorta(t.vigenciaHasta!)}. Pídele a '
+          'su médico una nueva para seguir gestionándolo.';
+    }
     final c = ciclo;
     if (c == null) {
       return proyeccion.enVentana
@@ -74,6 +84,7 @@ List<VistaTratamiento> vistasDe(Hogar hogar, DateTime hoy) {
         hogar.cicloEnCurso(t.id) == null
             ? const []
             : hogar.opcionesDe(hogar.cicloEnCurso(t.id)!.id),
+        hoy,
       ),
   ];
   int peso(VistaTratamiento v) => v.t.pausado ? 2 : (v.porDecidir ? 0 : 1);
