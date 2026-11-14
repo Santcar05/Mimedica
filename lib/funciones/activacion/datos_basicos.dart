@@ -154,7 +154,9 @@ class _DatosBasicosState extends ConsumerState<DatosBasicos> {
         ),
         if (_errorGeneral != null) MensajeError(_errorGeneral!),
       ],
-      pie: [Boton('Guardar mis datos', ocupado: _guardando, alPulsar: _guardar)],
+      pie: [
+        Boton('Guardar mis datos', ocupado: _guardando, alPulsar: _guardar),
+      ],
     );
   }
 }

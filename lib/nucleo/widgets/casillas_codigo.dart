@@ -47,13 +47,10 @@ class _CasillasCodigoState extends State<CasillasCodigo> {
   @override
   Widget build(BuildContext context) {
     final codigo = widget.controlador.text;
-    return Semantics(
-      label: 'Código de 6 dígitos',
-      textField: true,
-      value: codigo,
-      child: Stack(
-        children: [
-          Row(
+    return Stack(
+      children: [
+        ExcludeSemantics(
+          child: Row(
             children: [
               for (var i = 0; i < CasillasCodigo.largo; i++) ...[
                 if (i > 0) const SizedBox(width: 8),
@@ -67,36 +64,37 @@ class _CasillasCodigoState extends State<CasillasCodigo> {
               ],
             ],
           ),
-          Positioned.fill(
-            child: ExcludeSemantics(
-              child: TextField(
-                controller: widget.controlador,
-                focusNode: _foco,
-                autofocus: true,
-                enabled: widget.habilitado,
-                keyboardType: TextInputType.number,
-                autofillHints: const [AutofillHints.oneTimeCode],
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  LengthLimitingTextInputFormatter(CasillasCodigo.largo),
-                ],
-                showCursor: false,
-                enableInteractiveSelection: false,
-                style: const TextStyle(color: Colors.transparent, fontSize: 1),
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  counterText: '',
-                ),
-                onChanged: (valor) {
-                  if (valor.length == CasillasCodigo.largo) {
-                    widget.alCompletar(valor);
-                  }
-                },
+        ),
+        Positioned.fill(
+          child: Semantics(
+            label: 'Código de 6 dígitos',
+            child: TextField(
+              controller: widget.controlador,
+              focusNode: _foco,
+              autofocus: true,
+              enabled: widget.habilitado,
+              keyboardType: TextInputType.number,
+              autofillHints: const [AutofillHints.oneTimeCode],
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(CasillasCodigo.largo),
+              ],
+              showCursor: false,
+              enableInteractiveSelection: false,
+              style: const TextStyle(color: Colors.transparent, fontSize: 1),
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                counterText: '',
               ),
+              onChanged: (valor) {
+                if (valor.length == CasillasCodigo.largo) {
+                  widget.alCompletar(valor);
+                }
+              },
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

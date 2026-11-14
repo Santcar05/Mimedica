@@ -82,31 +82,35 @@ class _CampoState extends State<Campo> {
           conError: conError,
           child: Row(
             children: [
-              if (widget.prefijo != null) _Adorno(widget.prefijo!, inicio: true),
+              if (widget.prefijo != null)
+                _Adorno(widget.prefijo!, inicio: true),
               Expanded(
-                child: TextField(
-                  controller: widget.controlador,
-                  focusNode: _foco,
-                  autofocus: widget.autofoco,
-                  keyboardType: widget.teclado,
-                  inputFormatters: widget.formato,
-                  textInputAction: widget.accion,
-                  textCapitalization: widget.mayusculas,
-                  autofillHints: widget.autocompletar,
-                  onChanged: widget.alCambiar,
-                  onSubmitted: widget.alEnviar,
-                  style: Letra.entrada,
-                  cursorWidth: 1.5,
-                  decoration: InputDecoration(
-                    isCollapsed: true,
-                    border: InputBorder.none,
-                    hintText: widget.pista,
-                    hintStyle: Letra.entrada.copyWith(color: Tinta.apagada),
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 12,
+                child: Semantics(
+                  label: widget.rotulo,
+                  child: TextField(
+                    controller: widget.controlador,
+                    focusNode: _foco,
+                    autofocus: widget.autofoco,
+                    keyboardType: widget.teclado,
+                    inputFormatters: widget.formato,
+                    textInputAction: widget.accion,
+                    textCapitalization: widget.mayusculas,
+                    autofillHints: widget.autocompletar,
+                    onChanged: widget.alCambiar,
+                    onSubmitted: widget.alEnviar,
+                    style: Letra.entrada,
+                    cursorWidth: 1.5,
+                    decoration: InputDecoration(
+                      isCollapsed: true,
+                      border: InputBorder.none,
+                      hintText: widget.pista,
+                      hintStyle: Letra.entrada.copyWith(color: Tinta.apagada),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 12,
+                      ),
+                      semanticCounterText: '',
                     ),
-                    semanticCounterText: '',
                   ),
                 ),
               ),

@@ -49,11 +49,9 @@ class Hogar {
   final List<Opcion> opciones;
   final List<Pendiente> pendientes;
 
-  bool get activado =>
-      (perfil?.autorizo ?? false) && tratamientos.isNotEmpty;
+  bool get activado => (perfil?.autorizo ?? false) && tratamientos.isNotEmpty;
 
-  Persona? persona(String id) =>
-      personas.where((p) => p.id == id).firstOrNull;
+  Persona? persona(String id) => personas.where((p) => p.id == id).firstOrNull;
 
   Tratamiento? tratamiento(String id) =>
       tratamientos.where((t) => t.id == id).firstOrNull;

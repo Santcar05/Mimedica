@@ -71,22 +71,21 @@ class RepositorioLocal implements Repositorio {
   @override
   Future<void> eliminarTratamiento(String id) async {
     final datos = _datos;
-    final ciclos = _lista('ciclos')
-        .where((c) => c['tratamiento_id'] == id)
-        .map((c) => c['id'])
-        .toSet();
-    datos['tratamientos'] = _lista('tratamientos')
-        .where((t) => t['id'] != id)
-        .toList();
-    datos['ciclos'] = _lista('ciclos')
-        .where((c) => c['tratamiento_id'] != id)
-        .toList();
-    datos['opciones'] = _lista('opciones')
-        .where((o) => !ciclos.contains(o['ciclo_id']))
-        .toList();
-    datos['pendientes'] = _lista('pendientes')
-        .where((p) => p['tratamiento_id'] != id)
-        .toList();
+    final ciclos = _lista(
+      'ciclos',
+    ).where((c) => c['tratamiento_id'] == id).map((c) => c['id']).toSet();
+    datos['tratamientos'] = _lista(
+      'tratamientos',
+    ).where((t) => t['id'] != id).toList();
+    datos['ciclos'] = _lista(
+      'ciclos',
+    ).where((c) => c['tratamiento_id'] != id).toList();
+    datos['opciones'] = _lista(
+      'opciones',
+    ).where((o) => !ciclos.contains(o['ciclo_id'])).toList();
+    datos['pendientes'] = _lista(
+      'pendientes',
+    ).where((p) => p['tratamiento_id'] != id).toList();
     await _escribir(datos);
   }
 
@@ -164,9 +163,7 @@ class AccesoLocal implements Acceso {
   @override
   Future<void> verificar(String correo, String codigo) async {
     if (codigo != codigoDemo) {
-      throw const Fallo(
-        'Ese código no coincide. Revísalo o pide uno nuevo.',
-      );
+      throw const Fallo('Ese código no coincide. Revísalo o pide uno nuevo.');
     }
     await _prefs.setString(_claveCorreo, correo);
     _cambios.add(true);

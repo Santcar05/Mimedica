@@ -64,8 +64,7 @@ class _ConsentimientoState extends ConsumerState<Consentimiento> {
         const Interruptor(
           titulo: 'Usar mis datos para prestar el servicio',
           etiqueta: 'Necesaria',
-          detalle:
-              'Sin esto no podemos calcular fechas ni consultar a tu EPS.',
+          detalle: 'Sin esto no podemos calcular fechas ni consultar a tu EPS.',
           valor: true,
           fijo: true,
         ),
