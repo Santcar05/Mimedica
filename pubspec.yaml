@@ -2,7 +2,7 @@ name: mimedica_app
 description: "Mimedica: sabe cuándo se acaba el medicamento y empieza a gestionarlo 10 días antes."
 publish_to: 'none'
 
-version: 0.1.1+2
+version: 0.1.2+3
 
 environment:
   sdk: ^3.8.1
