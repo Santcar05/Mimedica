@@ -40,6 +40,9 @@ abstract final class Ritmo {
 }
 
 const radio = BorderRadius.all(Radius.circular(2));
+
+/// Los botones son más redondeados que el resto: se reconocen como pulsables.
+const radioBoton = BorderRadius.all(Radius.circular(8));
 const margen = 20.0;
 
 abstract final class Letra {
