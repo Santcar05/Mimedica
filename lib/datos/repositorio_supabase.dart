@@ -162,9 +162,9 @@ class RepositorioSupabase implements Repositorio {
   Future<void> eliminarCuenta() => _protegido(() async {
     final fotos = await _cliente.storage.from(_cubeta).list(path: _usuario);
     if (fotos.isNotEmpty) {
-      await _cliente.storage
-          .from(_cubeta)
-          .remove([for (final f in fotos) '$_usuario/${f.name}']);
+      await _cliente.storage.from(_cubeta).remove([
+        for (final f in fotos) '$_usuario/${f.name}',
+      ]);
     }
     await _cliente.rpc('eliminar_cuenta');
     await _cliente.auth.signOut(scope: SignOutScope.local);

@@ -37,7 +37,11 @@ class FilaEnlace extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Row(
             children: [
-              Trazo(icono, tam: 20, color: color == Tinta.tinta ? Tinta.apagada : color),
+              Trazo(
+                icono,
+                tam: 20,
+                color: color == Tinta.tinta ? Tinta.apagada : color,
+              ),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(

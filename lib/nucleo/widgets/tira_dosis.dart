@@ -32,7 +32,10 @@ class TiraDosis extends StatefulWidget {
 
 class _TiraDosisState extends State<TiraDosis>
     with SingleTickerProviderStateMixin {
-  late final _entrada = AnimationController(vsync: this, duration: Ritmo.pagina);
+  late final _entrada = AnimationController(
+    vsync: this,
+    duration: Ritmo.pagina,
+  );
   bool _iniciada = false;
 
   @override

@@ -5,7 +5,11 @@ import 'package:go_router/go_router.dart';
 import '../datos/hogar.dart';
 import '../funciones/activacion/consentimiento.dart';
 import '../funciones/activacion/datos_basicos.dart';
+import '../funciones/activacion/plan_activo.dart';
 import '../funciones/activacion/quien_usa.dart';
+import '../funciones/formula/captura.dart';
+import '../funciones/formula/plan_nuevo.dart';
+import '../funciones/formula/previsualizacion.dart';
 import '../funciones/ingreso/bienvenida.dart';
 import '../funciones/ingreso/entrada.dart';
 import '../funciones/ingreso/ingreso_codigo.dart';
@@ -87,6 +91,20 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const Consentimiento(),
       ),
       GoRoute(path: '/activacion/quien', builder: (_, _) => const QuienUsa()),
+      GoRoute(
+        path: '/activacion/plan-activo',
+        builder: (_, estado) =>
+            PlanActivo(tratamientoId: estado.extra as String),
+      ),
+      GoRoute(
+        path: '/formula/captura',
+        builder: (_, _) => const CapturaFormula(),
+      ),
+      GoRoute(
+        path: '/formula/previa',
+        builder: (_, _) => const Previsualizacion(),
+      ),
+      GoRoute(path: '/formula/plan', builder: (_, _) => const PlanNuevo()),
       GoRoute(
         path: '/inicio',
         builder: (_, _) => const Scaffold(body: Center(child: Text('Inicio'))),

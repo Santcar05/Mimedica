@@ -39,10 +39,11 @@ class Proyeccion {
   bool get enVentana => diasRestantes <= diasDeGestion;
 }
 
-int _diasEntre(DateTime desde, DateTime hasta) =>
-    DateTime.utc(hasta.year, hasta.month, hasta.day)
-        .difference(DateTime.utc(desde.year, desde.month, desde.day))
-        .inDays;
+int _diasEntre(DateTime desde, DateTime hasta) => DateTime.utc(
+  hasta.year,
+  hasta.month,
+  hasta.day,
+).difference(DateTime.utc(desde.year, desde.month, desde.day)).inDays;
 
 /// Proyecta el agotamiento a partir de lo que había en casa el día del conteo.
 ///
@@ -60,7 +61,11 @@ Proyeccion proyectar(Tratamiento t, DateTime hoy) {
 
   final diasCubiertos = (t.enCasa / consumo + 1e-9).floor();
   final conteo = soloDia(t.contadoEl);
-  final agotamiento = DateTime(conteo.year, conteo.month, conteo.day + diasCubiertos);
+  final agotamiento = DateTime(
+    conteo.year,
+    conteo.month,
+    conteo.day + diasCubiertos,
+  );
 
   final transcurridos = max(0, _diasEntre(conteo, hoy));
   final quedan = (t.enCasa - consumo * transcurridos).clamp(0.0, t.enCasa);

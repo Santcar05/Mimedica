@@ -85,12 +85,14 @@ class _IngresoCodigoState extends ConsumerState<IngresoCodigo> {
 
   @override
   Widget build(BuildContext context) {
-    final minutos = '${_faltan ~/ 60}:${(_faltan % 60).toString().padLeft(2, '0')}';
+    final minutos =
+        '${_faltan ~/ 60}:${(_faltan % 60).toString().padLeft(2, '0')}';
     return Pantalla(
       hijos: [
         Cabecera(
           'Escribe el código que te enviamos',
-          bajada: 'Llegó a ${correoVelado(widget.correo)}. Revisa también la '
+          bajada:
+              'Llegó a ${correoVelado(widget.correo)}. Revisa también la '
               'carpeta de spam.',
         ),
         const SizedBox(height: 32),

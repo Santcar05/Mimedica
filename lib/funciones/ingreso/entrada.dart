@@ -61,7 +61,8 @@ class Entrada extends ConsumerWidget {
               : sinRed
               ? 'No hay conexión'
               : 'No pudimos abrir tus datos',
-          bajada: fallo?.mensaje ??
+          bajada:
+              fallo?.mensaje ??
               'Tus datos siguen guardados. Inténtalo de nuevo en un momento.',
         ),
       ],

@@ -6,7 +6,8 @@ final _soloFecha = DateFormat('yyyy-MM-dd');
 
 String _fecha(DateTime d) => _soloFecha.format(d);
 DateTime _leerFecha(String s) => DateTime.parse(s.substring(0, 10));
-DateTime? _leerFechaOpc(Object? s) => s == null ? null : _leerFecha(s as String);
+DateTime? _leerFechaOpc(Object? s) =>
+    s == null ? null : _leerFecha(s as String);
 DateTime? _leerInstante(Object? s) =>
     s == null ? null : DateTime.parse(s as String).toLocal();
 double? _num(Object? n) => (n as num?)?.toDouble();

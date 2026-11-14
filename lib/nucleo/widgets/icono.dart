@@ -95,7 +95,8 @@ class Trazo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tinta = color ?? DefaultTextStyle.of(context).style.color ?? Tinta.tinta;
+    final tinta =
+        color ?? DefaultTextStyle.of(context).style.color ?? Tinta.tinta;
     return ExcludeSemantics(
       child: SvgPicture.string(
         '<svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.25" '

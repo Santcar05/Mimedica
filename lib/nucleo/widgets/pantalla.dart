@@ -32,7 +32,8 @@ class Pantalla extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final puedeVolver = conVolver && (alVolver != null || Navigator.canPop(context));
+    final puedeVolver =
+        conVolver && (alVolver != null || Navigator.canPop(context));
     final conEncabezado = puedeVolver || contexto != null || accion != null;
 
     return Scaffold(
@@ -152,10 +153,7 @@ class Dato extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 128,
-            child: Text(rotulo, style: Letra.secundario),
-          ),
+          SizedBox(width: 128, child: Text(rotulo, style: Letra.secundario)),
           const SizedBox(width: 12),
           Expanded(child: Text(valor, style: Letra.cuerpo.tabular)),
           if (accion != null) accion!,
